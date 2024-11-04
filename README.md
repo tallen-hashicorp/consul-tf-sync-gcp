@@ -62,3 +62,15 @@ packer build -var-file=variables.pkrvars.hcl packer/gcp-almalinux-consul-server.
 # Build the nginx server image
 packer build -var-file=variables.pkrvars.hcl packer/gcp-almalinux-nginx.pkr.hcl
 ```
+
+## Step 4: Provision with Terraform
+
+You can now use Terraform to provision a **Consul** cluster. This example creates a 3-node consul server cluster. The `terraform.tfvars` file is generated from the original `variables.pkrvars.hcl` used during the Packer build.
+
+```bash
+# Create tfvars from pkrvars and provision the cluster
+sed '/image_family.*/d' variables.pkrvars.hcl > tf/terraform.tfvars
+cd tf
+terraform init
+terraform apply
+```
