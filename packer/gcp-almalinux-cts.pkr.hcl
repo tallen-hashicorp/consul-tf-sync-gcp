@@ -31,7 +31,7 @@ source "googlecompute" "almalinux-cts" {
   region              = var.gcp_region
   zone                = var.gcp_zone
   source_image_family = var.image_family
-  machine_type        = "e2-medium"
+  machine_type        = "e2-medium" #e2-standard-4
   image_name          = "almalinux-cts{{timestamp}}"
   image_family        = "almalinux-cts"
   disk_size           = 20
@@ -51,6 +51,11 @@ build {
   provisioner "file" {
     source = "./packer/configs/cts-firewall.hcl"
     destination = "/tmp/cts-firewall.hcl"
+  }
+
+  provisioner "file" {
+    source = "cts-firewall-module/"
+    destination = "/tmp/"
   }
 
   provisioner "file" {
