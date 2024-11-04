@@ -12,12 +12,12 @@ buffer_period {
 license {
   path = "/etc/consul.d/license.hclic"
   auto_retrieval {
-    enabled = true
+    enabled = false
   }
 }
 
 consul {
-  address = "consul-servers.consul.local:8500"
+  address = "127.0.0.1:8500"
   service_registration {
     service_name = "cts"
     default_check {
