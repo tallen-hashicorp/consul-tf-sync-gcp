@@ -26,7 +26,7 @@ variable "image_family" {
   default = "almalinux-8"
 }
 
-source "googlecompute" "almalinux-nginx" {
+source "googlecompute" "almalinux-cts" {
   project_id          = var.gcp_project_id
   region              = var.gcp_region
   zone                = var.gcp_zone
@@ -49,6 +49,11 @@ build {
   }
 
   provisioner "file" {
+    source = "./packer/configs/cts-firewall.hcl"
+    destination = "/tmp/cts-firewall.hcl"
+  }
+
+  provisioner "file" {
     source = "./consul.hclic"
     destination = "/tmp/consul.hclic"
   }
@@ -56,5 +61,9 @@ build {
   provisioner "shell" {
     script            = "./packer/scripts/provision-consul.sh"
   }
-  
+
+  provisioner "shell" {
+    script            = "./packer/scripts/provision-cts.sh"
+  }
+
 }

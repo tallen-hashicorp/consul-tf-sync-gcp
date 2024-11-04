@@ -6,7 +6,7 @@ export CONSUL_VERSION="1.19.2+ent"
 sudo dnf update -y
 
 # Install required packages
-sudo dnf install -y unzip curl wget
+sudo dnf install -y unzip curl wget bind-utils
 
 # Add HashiCorp's official RPM repository
 curl -fsSL https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo | sudo tee /etc/yum.repos.d/hashicorp.repo

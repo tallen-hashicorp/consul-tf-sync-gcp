@@ -36,7 +36,7 @@ resource "google_compute_region_backend_service" "consul_backend" {
   region                = "europe-west2"
   health_checks         = [google_compute_region_health_check.consul_hc.self_link]
   backend {
-    group = google_compute_instance_group.consul_instance_group.self_link
+    group          = google_compute_instance_group.consul_instance_group.self_link
     balancing_mode = "CONNECTION"
   }
 }
@@ -70,6 +70,37 @@ resource "google_compute_forwarding_rule" "consul_lb" {
   ports                 = ["8500"]
 }
 
+# -------------------CTS Server-------------------
+resource "google_compute_instance" "cts_servers" {
+  count        = var.cts_instance_count
+  name         = "cts-server-${count.index + 1}"
+  machine_type = "e2-medium"
+  zone         = "${var.gcp_region}-a"
+
+  tags = ["cts-server"]
+
+  boot_disk {
+    initialize_params {
+      image = data.google_compute_image.almalinux_cts.self_link
+      size  = 20
+    }
+  }
+
+  network_interface {
+    network = "default"
+    access_config {
+      // Required to give instances external IPs #8
+    }
+  }
+
+  metadata = {
+    enable-oslogin = "TRUE"
+  }
+
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+  }
+}
 
 # -------------------Nginx-------------------
 
@@ -90,6 +121,9 @@ resource "google_compute_instance" "nginx_server" {
 
   network_interface {
     network = "default"
+    access_config {
+      // Required to give instances external IPs #8
+    }
   }
 
   metadata = {
@@ -104,6 +138,11 @@ resource "google_compute_instance" "nginx_server" {
 # -------------------Data-------------------
 data "google_compute_image" "almalinux_consul_server" {
   family  = "almalinux-consul-server"
+  project = var.gcp_project_id
+}
+
+data "google_compute_image" "almalinux_cts" {
+  family  = "almalinux-cts"
   project = var.gcp_project_id
 }
 
@@ -128,3 +167,33 @@ resource "google_compute_firewall" "consul_firewall" {
   target_tags = ["consul-server"]
 }
 
+# -------------------DNS for Consul CTS-------------------
+
+# Create a Cloud DNS Managed Zone
+resource "google_dns_managed_zone" "my_zone" {
+  name       = "consul-zone"
+  dns_name   = "consul.internal."
+  visibility = "private"
+
+  private_visibility_config {
+    networks {
+      network_url = "projects/${var.gcp_project_id}/global/networks/default"
+    }
+  }
+  
+}
+
+# Create a local DNS entry for each Consul server instance
+# consul-servers.consul.local
+resource "google_dns_record_set" "consul_servers" {
+  name         = "consul-servers.consul.internal."
+  managed_zone = google_dns_managed_zone.my_zone.name
+  type         = "A"
+  ttl          = 300
+
+  # Collect all internal IP addresses of the Consul servers
+  rrdatas = [
+    for instance in google_compute_instance.consul_servers :
+    instance.network_interface[0].network_ip
+  ]
+}
