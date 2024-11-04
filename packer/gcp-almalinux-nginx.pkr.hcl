@@ -41,7 +41,7 @@ source "googlecompute" "almalinux-nginx" {
 }
 
 build {
-  sources = ["source.googlecompute.almalinux-consul-client"]
+  sources = ["source.googlecompute.almalinux-nginx"]
 
   provisioner "file" {
     source = "./packer/configs/consul-nginx.hcl"
