@@ -31,7 +31,7 @@ source "googlecompute" "almalinux-consul-server" {
   region              = var.gcp_region
   zone                = var.gcp_zone
   source_image_family = var.image_family
-  machine_type        = "e2-medium"
+  machine_type        = "e2-standard-4"
   image_name          = "almalinux-consul-server-{{timestamp}}"
   image_family        = "almalinux-consul-server"
   disk_size           = 20

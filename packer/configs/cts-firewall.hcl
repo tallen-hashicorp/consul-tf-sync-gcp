@@ -25,3 +25,35 @@ consul {
     }
   }
 }
+
+driver "terraform" {
+  log         = false
+
+  backend "consul" {
+    gzip = true
+  }
+
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+      version = "~> 6.10.0"
+    }
+  }
+}
+
+task {
+  name      = "firewall"
+  description = "add firewall changes for every nginx node"
+  module    = "/opt/cts-firewall-module"
+  providers = ["google"]
+
+  condition "services" {
+    names = ["standalone/nginx"]
+    use_as_module_input = true
+  }
+
+  module_input "consul-kv" {
+    path       = "gcp_project_id"
+    recurse    = false
+  }
+}

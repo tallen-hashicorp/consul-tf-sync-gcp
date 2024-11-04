@@ -110,7 +110,7 @@ resource "google_compute_instance" "nginx_server" {
   machine_type = "e2-small"
   zone         = "${var.gcp_region}-a"
 
-  tags = ["nginx-client"]
+  tags = ["nginx"] # For the Firewall demo to work this needs to match Consul's tags
 
   boot_disk {
     initialize_params {
@@ -193,4 +193,18 @@ resource "google_dns_record_set" "consul_servers" {
     for instance in google_compute_instance.consul_servers :
     instance.network_interface[0].network_ip
   ]
+}
+
+# -------------------Consul KV for Project ID-------------------
+# This is used to store the project ID in Consul and picked up by CTS
+provider "consul" {
+  address    = "${google_compute_forwarding_rule.consul_lb.ip_address}:8500"
+}
+
+resource "consul_keys" "gcp_project_id" {
+  # Set the CNAME of our load balancer as a key
+  key {
+    path  = "gcp_project_id"
+    value = "${var.gcp_project_id}"
+  }
 }

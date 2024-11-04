@@ -9,6 +9,48 @@ Before you begin, ensure you have the following tools installed:
 - [HashiCorp Packer](https://developer.hashicorp.com/packer/tutorials/docker-get-started/get-started-install-cli)
 - **Consul License File**
 
+Absolutely, here’s an updated README section that describes the functionality and setup of the `cts-firewall-module` using the refined Terraform configuration.
+
+---
+
+# CTS Tasks
+
+## cts-firewall-module
+
+This module creates Google Cloud Platform (GCP) firewall rules for services discovered by Consul Terraform Sync (CTS). Specifically, it targets services with the name `standalone/nginx`, as defined in [cts-firewall.hcl](./packer/configs/cts-firewall.hcl). Each firewall rule is dynamically generated using the service’s IP address and tags retrieved from Consul, opening port 80 for any instances with matching tags. 
+
+### How It Works
+
+1. **Service Filtering**: The module filters services to include only those with the name `standalone/nginx`. This ensures that only specific services are processed, keeping firewall rules tightly controlled and relevant.
+
+2. **Firewall Rule Creation**: For each qualifying service:
+   - A GCP firewall rule is created with the name `firewall-<service-node>`.
+   - Port 80 is opened, allowing HTTP traffic to instances with the Consul tags associated with that service.
+   - The rule’s source IP is restricted to the specific IP address of each `nginx` service instance, further narrowing access.
+   
+3. **Automatic Scaling**: As `nginx` service instances are scaled up or down, CTS detects these changes, creating or removing firewall rules accordingly. This dynamic approach simplifies security management, allowing the firewall rules to adjust automatically based on real-time service discovery.
+
+With 2 nginx nodes this is the created firewall's
+![firewalls](./docs/firewalls.png)
+
+![firewalls](./docs/firewall.png)
+
+This screenshot shows Consul while this was running
+
+![consul](./docs/consul-nodes.png)
+
+### Use Case & Example
+
+This configuration showcases how CTS, combined with Terraform, can automate infrastructure updates based on real-time service changes. By defining rules based on service tags and IP addresses, you can scale firewall access as instances are added or removed, without manual intervention.
+
+### Future Considerations
+
+For larger setups or different use cases, firewall rules could be applied more broadly using tag-based targeting across multiple service types. This would allow more generalized rules (e.g., target groups for specific types of applications) without needing individual IP-based rules, balancing security and scalability.
+
+---
+
+# Configure
+
 ## Step 1: Authenticate with GCP
 
 Authenticate your GCP account and configure the project you want to use:
