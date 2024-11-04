@@ -198,13 +198,14 @@ resource "google_dns_record_set" "consul_servers" {
 # -------------------Consul KV for Project ID-------------------
 # This is used to store the project ID in Consul and picked up by CTS
 provider "consul" {
-  address    = "${google_compute_forwarding_rule.consul_lb.ip_address}:8500"
+  address = "${google_compute_forwarding_rule.consul_lb.ip_address}:8500"
 }
 
 resource "consul_keys" "gcp_project_id" {
   # Set the CNAME of our load balancer as a key
   key {
-    path  = "gcp_project_id"
-    value = "${var.gcp_project_id}"
+    path   = "gcp_project_id"
+    value  = var.gcp_project_id
+    delete = true
   }
 }

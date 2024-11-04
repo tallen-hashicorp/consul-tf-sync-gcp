@@ -99,3 +99,22 @@ resource "google_compute_firewall" "nginx_service_firewalls" {
   description = "Firewall rule for ${each.value.name} with address ${each.value.address} on port 80"
 }
 ```
+
+## Example systemctl service
+```ini
+[Unit]
+Description=MyApp Service
+After=network.target
+
+[Service]
+Type=simple
+User=myuser
+Group=mygroup
+ExecStart=/usr/local/bin/myapp --config /etc/myapp/config.yaml
+Restart=on-failure
+Environment=MYAPP_ENV=production
+WorkingDirectory=/var/lib/myapp
+
+[Install]
+WantedBy=multi-user.target
+```
