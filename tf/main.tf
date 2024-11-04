@@ -178,7 +178,6 @@ resource "google_dns_managed_zone" "my_zone" {
       network_url = "projects/${var.gcp_project_id}/global/networks/default"
     }
   }
-  
 }
 
 # consul-servers.consul.local
