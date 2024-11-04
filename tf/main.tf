@@ -16,9 +16,6 @@ resource "google_compute_instance" "consul_servers" {
 
   network_interface {
     network = "default"
-    access_config {
-      // Required to give instances external IPs
-    }
   }
 
   metadata = {
