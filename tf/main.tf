@@ -168,8 +168,6 @@ resource "google_compute_firewall" "consul_firewall" {
 }
 
 # -------------------DNS for Consul CTS-------------------
-
-# Create a Cloud DNS Managed Zone
 resource "google_dns_managed_zone" "my_zone" {
   name       = "consul-zone"
   dns_name   = "consul.internal."
@@ -183,7 +181,6 @@ resource "google_dns_managed_zone" "my_zone" {
   
 }
 
-# Create a local DNS entry for each Consul server instance
 # consul-servers.consul.local
 resource "google_dns_record_set" "consul_servers" {
   name         = "consul-servers.consul.internal."
