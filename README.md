@@ -1,5 +1,5 @@
 # consul-tf-sync-gcp
-An demo of Consul and Terraform sync on GCP
+An demo of Consul and Terraform sync on GCP. Most of the configuratin is taken form this [guide](https://developer.hashicorp.com/consul/tutorials/network-automation/consul-terraform-sync)
 
 ## Prerequisites
 
@@ -47,7 +47,7 @@ The script will prompt you for your GCP project ID, region, and other details. B
 
 ### Build the Images
 
-Once variables are set, you can use **Packer** to build the **Nomad** server and client images. To update the version of **Nomad** or **Consul**, modify the `NOMAD_VERSION` and `CONSUL_VERSION` in the [provision-nomad.sh](./packer/scripts/provision-nomad.sh) & [provision-consul.sh](./packer/scripts/provision-consul.sh) scripts.
+Once variables are set, you can use **Packer** to build the **Consul** server and client images. To update the version of **Consul**, modify the `CONSUL_VERSION` in the [provision-consul.sh](./packer/scripts/provision-consul.sh) script.
 
 You can run both builds simultaneously using `./build-packer.sh`, or manually with the following commands:
 
