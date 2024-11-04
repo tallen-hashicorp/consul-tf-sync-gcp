@@ -49,9 +49,6 @@ resource "google_compute_instance" "nginx_server" {
 
   network_interface {
     network = "default"
-    access_config {
-      // Required to give instances external IPs
-    }
   }
 
   metadata = {
