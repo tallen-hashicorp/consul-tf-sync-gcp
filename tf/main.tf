@@ -1,11 +1,11 @@
 # -------------------Consul Server-------------------
 resource "google_compute_instance" "consul_servers" {
-  count         = var.server_instance_count
-  name          = "consul-server-${count.index + 1}"
-  machine_type  = "e2-medium"
-  zone          = "${var.gcp_region}-a"
+  count        = var.server_instance_count
+  name         = "consul-server-${count.index + 1}"
+  machine_type = "e2-medium"
+  zone         = "${var.gcp_region}-a"
 
-  tags          = ["consul-server"]
+  tags = ["consul-server"]
 
   boot_disk {
     initialize_params {
@@ -16,9 +16,6 @@ resource "google_compute_instance" "consul_servers" {
 
   network_interface {
     network = "default"
-    access_config {
-      // Required to give instances external IPs
-    }
   }
 
   metadata = {
@@ -30,15 +27,59 @@ resource "google_compute_instance" "consul_servers" {
   }
 }
 
+# -------------------Consul LB---------------
+# Create a backend service
+resource "google_compute_region_backend_service" "consul_backend" {
+  name                  = "consul-backend"
+  protocol              = "TCP"
+  load_balancing_scheme = "EXTERNAL"
+  region                = "europe-west2"
+  health_checks         = [google_compute_region_health_check.consul_hc.self_link]
+  backend {
+    group = google_compute_instance_group.consul_instance_group.self_link
+    balancing_mode = "CONNECTION"
+  }
+}
+
+# Create a health check for the backend instances
+resource "google_compute_region_health_check" "consul_hc" {
+  name = "consul-health-check"
+  tcp_health_check {
+    port = 8500 # Consul default port
+  }
+}
+
+# Instance group for Consul servers
+resource "google_compute_instance_group" "consul_instance_group" {
+  name      = "consul-instance-group"
+  zone      = "${var.gcp_region}-a"
+  instances = [for instance in google_compute_instance.consul_servers : instance.self_link]
+  named_port {
+    name = "consul"
+    port = 8500
+  }
+}
+
+# external forwarding rule
+resource "google_compute_forwarding_rule" "consul_lb" {
+  name                  = "consul-internal-lb"
+  load_balancing_scheme = "EXTERNAL"
+  region                = "europe-west2"
+  backend_service       = google_compute_region_backend_service.consul_backend.self_link
+  ip_protocol           = "TCP"
+  ports                 = ["8500"]
+}
+
+
 # -------------------Nginx-------------------
 
 resource "google_compute_instance" "nginx_server" {
-  count         = var.nginx_instance_count
-  name          = "nginx-${count.index + 1}"
-  machine_type  = "e2-small"
-  zone          = "${var.gcp_region}-a"
+  count        = var.nginx_instance_count
+  name         = "nginx-${count.index + 1}"
+  machine_type = "e2-small"
+  zone         = "${var.gcp_region}-a"
 
-  tags          = ["nginx-client"]
+  tags = ["nginx-client"]
 
   boot_disk {
     initialize_params {
