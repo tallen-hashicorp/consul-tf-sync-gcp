@@ -15,7 +15,7 @@ curl -fsSL https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo | sudo tee /et
 sudo dnf install -y terraform
 
 # Upgrade Consul to ent
-wget -q "https://releases.hashicorp.com/consul-terraform-sync/${CTS_VERSION}/consul-terraform-sync_${CTS_VERSION}_linux_amd64.zip"
+wget --no-clobber -q "https://releases.hashicorp.com/consul-terraform-sync/${CTS_VERSION}/consul-terraform-sync_${CTS_VERSION}_linux_amd64.zip"
 unzip consul-terraform-sync_${CTS_VERSION}_linux_amd64.zip
 chmod +x consul-terraform-sync
 sudo chown root:root consul-terraform-sync
