@@ -180,7 +180,7 @@ resource "google_dns_managed_zone" "my_zone" {
   }
 }
 
-# consul-servers.consul.local
+# consul-servers.consul.internal
 resource "google_dns_record_set" "consul_servers" {
   name         = "consul-servers.consul.internal."
   managed_zone = google_dns_managed_zone.my_zone.name
