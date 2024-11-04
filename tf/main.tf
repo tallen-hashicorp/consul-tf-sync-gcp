@@ -168,6 +168,7 @@ resource "google_compute_firewall" "consul_firewall" {
 }
 
 # -------------------DNS for Consul CTS-------------------
+# This is not required but nice to have
 resource "google_dns_managed_zone" "my_zone" {
   name       = "consul-zone"
   dns_name   = "consul.internal."
