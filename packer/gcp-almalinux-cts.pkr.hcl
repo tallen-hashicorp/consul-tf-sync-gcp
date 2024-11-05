@@ -58,8 +58,6 @@ build {
     destination = "/tmp/consul-terraform-sync.service"
   }
 
-  
-
   provisioner "file" {
     source = "cts-firewall-module"
     destination = "/tmp/"
