@@ -118,3 +118,12 @@ WorkingDirectory=/var/lib/myapp
 [Install]
 WantedBy=multi-user.target
 ```
+
+## Example compute self link
+```
+consul_server_instance_links = [
+  "https://www.googleapis.com/compute/v1/projects/{gcp_project}/zones/{zone}/instances/consul-server-1",
+  "https://www.googleapis.com/compute/v1/projects/hc-********/zones/******-west2-a/instances/consul-server-2",
+  "https://www.googleapis.com/compute/v1/projects/hc-********/zones/******-west2-a/instances/consul-server-3",
+]
+```

@@ -19,10 +19,10 @@ variable "server_instance_count" {
 
 variable "cts_instance_count" {
   description = "The number of cts instances to create"
-  default     = 0
+  default     = 1
 }
 
 variable "nginx_instance_count" {
   description = "The number of nginx instances to create"
-  default     = 0
+  default     = 2
 }
