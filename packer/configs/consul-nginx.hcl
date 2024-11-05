@@ -31,6 +31,8 @@ service {
         timeout = "1s"
     }
     meta = {
-        gcp_project_id = ""
+        gcp_project_id  = ""
+        gcp_region      = "europe-west2" #Hardcoded for simplicity; should ideally be dynamic.
+        gcp_zone        = "europe-west2-a"
     }
 }

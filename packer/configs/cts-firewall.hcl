@@ -58,3 +58,15 @@ task {
     use_as_module_input = true
   }
 }
+
+task {
+  name      = "lb"
+  description = "add lb changes for every nginx node"
+  module    = "/opt/cts-lb-module"
+  providers = ["google"]
+
+  condition "services" {
+    names = ["standalone/nginx"]
+    use_as_module_input = true
+  }
+}

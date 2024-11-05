@@ -48,6 +48,41 @@ This configuration demonstrates how CTS, combined with Terraform, can automate i
 
 For larger setups or different use cases, firewall rules could be applied more broadly using tag-based targeting across multiple service types. This would allow more generalized rules (e.g., target groups for specific types of applications) without needing individual IP-based rules, balancing security and scalability.
 
+## cts-lb-module
+
+This module creates Google Cloud Platform (GCP) load balancers for services discovered by Consul Terraform Sync (CTS). It specifically targets services with the name `standalone/nginx`, as defined in [cts-firewall.hcl](./packer/configs/cts-firewall.hcl). The load balancer is set up to route TCP traffic to `nginx` instances based on their metadata retrieved from Consul.
+
+### How It Works
+
+1. **Service Filtering**: The module filters services to include only those named `standalone/nginx`, ensuring that only specific services are processed for load balancing, which helps maintain a focused and efficient configuration.
+
+2. **Load Balancer Creation**: For each qualifying service:
+   - A GCP region backend service is created named `nginx-backend`.
+   - TCP traffic is managed, allowing connections on port 80.
+   - Health checks are configured to monitor the `nginx` instances, ensuring traffic is only routed to healthy endpoints.
+
+3. **Instance Group Management**: An instance group is created that dynamically includes all `nginx` service instances based on the metadata provided by Consul. This group ensures that the load balancer can scale automatically with the instances, distributing traffic evenly.
+
+4. **Automatic Scaling**: As `nginx` service instances scale up or down, CTS detects these changes, and the load balancer is automatically updated to reflect the current state of the service instances. This dynamic management simplifies infrastructure operations.
+
+With `nginx` instances in place, the following resources are created:
+
+![load-balancer](./docs/instance-group.png)
+
+![backend-service](./docs/nginx-http.png)
+
+This screenshot shows the backend configuration:
+
+![nginx](./docs/nginx-backend.png)
+
+The following shows the instance group when this is scaled out further
+
+![scaled](./docs/nginx-backend-5.png)
+
+### Future Considerations
+
+For larger setups or different use cases, load balancing rules could be applied to additional services or protocols, expanding the capabilities of the load balancer. Implementing multiple backend services could enhance redundancy and scalability, ensuring seamless application performance as demand fluctuates.
+
 ---
 
 # Configure
