@@ -29,3 +29,12 @@ sudo chcon -t bin_t /usr/bin/consul-terraform-sync
 sudo mv /tmp/cts-firewall-module /opt/cts-firewall-module
 sudo chown -R root:root /opt/cts-firewall-module
 sudo chmod -R 755 /opt/cts-firewall-module
+
+# Move config file
+sudo mv /tmp/cts-firewall.hcl /etc/cts/cts-firewall.hcl
+
+# Move and configure service
+sudo mkdir -p /etc/cts
+sudo mv /tmp/consul-terraform-sync.service /etc/systemd/system/consul-terraform-sync.service
+sudo systemctl daemon-reload
+sudo systemctl enable consul-terraform-sync

@@ -54,6 +54,13 @@ build {
   }
 
   provisioner "file" {
+    source = "./packer/configs/consul-terraform-sync.service"
+    destination = "/tmp/consul-terraform-sync.service"
+  }
+
+  
+
+  provisioner "file" {
     source = "cts-firewall-module"
     destination = "/tmp/"
   }
