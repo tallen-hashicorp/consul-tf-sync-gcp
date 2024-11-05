@@ -1,5 +1,5 @@
 log_level   = "INFO"
-working_dir = "sync-tasks"
+working_dir = "/etc/cts/sync-tasks"
 port        = 8558
 id          = "cts-firewall"
 
@@ -7,6 +7,12 @@ buffer_period {
   enabled = true
   min     = "5s"
   max     = "20s"
+}
+
+syslog {
+  enabled  = true
+  name     = "consul-terraform-sync"
+  facility = "local0"
 }
 
 license {

@@ -1,5 +1,5 @@
 # consul-tf-sync-gcp
-An demo of Consul and Terraform sync on GCP. Most of the configuratin is taken form this [guide](https://developer.hashicorp.com/consul/tutorials/network-automation/consul-terraform-sync). 
+An demo of Consul and Terraform sync on GCP. Most of the configuratin is taken form this [guide](https://developer.hashicorp.com/consul/tutorials/network-automation/consul-terraform-sync). More detailed docs on this can be found [here](https://developer.hashicorp.com/consul/docs/nia)
 
 **Note:** in this demo we are using stand alone CTS, for production its recomended to run [Consul-Terraform-Sync with high availability](https://developer.hashicorp.com/consul/docs/nia/usage/run-ha)
 
