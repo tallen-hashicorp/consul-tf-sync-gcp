@@ -13,7 +13,7 @@ echo "GCP_PROJECT_ID: $GCP_PROJECT_ID"
 CONFIG_FILE="/tmp/consul.hcl"
 
 # Use sed to replace the gcp_project_id line with the new project ID
-sed -i 's/gcp_project_id = ""/gcp_project_id = "'"$GCP_PROJECT_ID"'"/' $CONFIG_FILE 
+sed -i 's/gcp_project_id.*= ""/gcp_project_id = "'"$GCP_PROJECT_ID"'"/' $CONFIG_FILE 
 
 # Inform the user that the replacement is done
 echo "Updated gcp_project_id in $CONFIG_FILE to $GCP_PROJECT_ID"

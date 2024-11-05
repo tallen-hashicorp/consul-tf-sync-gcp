@@ -25,10 +25,15 @@ consul-terraform-sync --version
 # Set SELinux Context
 sudo chcon -t bin_t /usr/bin/consul-terraform-sync
 
-# Copy TF modules
+# Copy TF firewall modules
 sudo mv /tmp/cts-firewall-module /opt/cts-firewall-module
 sudo chown -R root:root /opt/cts-firewall-module
 sudo chmod -R 755 /opt/cts-firewall-module
+
+# Copy LB firewall modules
+sudo mv /tmp/cts-lb-module /opt/cts-lb-module
+sudo chown -R root:root /opt/cts-lb-module
+sudo chmod -R 755 /opt/cts-lb-module
 
 # Move config file
 sudo mkdir -p /etc/cts

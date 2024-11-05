@@ -64,6 +64,11 @@ build {
   }
 
   provisioner "file" {
+    source = "cts-lb-module"
+    destination = "/tmp/"
+  }
+
+  provisioner "file" {
     source = "./consul.hclic"
     destination = "/tmp/consul.hclic"
   }
