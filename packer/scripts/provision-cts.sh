@@ -31,6 +31,7 @@ sudo chown -R root:root /opt/cts-firewall-module
 sudo chmod -R 755 /opt/cts-firewall-module
 
 # Move config file
+sudo mkdir -p /etc/cts
 sudo mv /tmp/cts-firewall.hcl /etc/cts/cts-firewall.hcl
 
 # Move and configure service
