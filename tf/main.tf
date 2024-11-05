@@ -206,6 +206,5 @@ resource "consul_keys" "gcp_project_id" {
   key {
     path   = "gcp_project_id"
     value  = var.gcp_project_id
-    delete = true
   }
 }

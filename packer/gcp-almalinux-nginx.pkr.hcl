@@ -54,6 +54,13 @@ build {
   }
 
   provisioner "shell" {
+    script            = "./packer/scripts/update-gcp-project.sh"
+    environment_vars  = [
+      "GCP_PROJECT_ID=${var.gcp_project_id}",
+    ]
+  }
+
+  provisioner "shell" {
     script            = "./packer/scripts/provision-consul.sh"
   }
 

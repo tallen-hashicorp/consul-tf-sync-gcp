@@ -51,9 +51,4 @@ task {
     names = ["standalone/nginx"]
     use_as_module_input = true
   }
-
-  module_input "consul-kv" {
-    path       = "gcp_project_id"
-    recurse    = false
-  }
 }

@@ -41,8 +41,3 @@ variable "services" {
     })
   )
 }
-
-variable "gcp_project_id" {
-  description = "The GCP project ID where the firewall rules should be created"
-  type        = string
-}

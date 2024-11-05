@@ -1,5 +1,7 @@
 # consul-tf-sync-gcp
-An demo of Consul and Terraform sync on GCP. Most of the configuratin is taken form this [guide](https://developer.hashicorp.com/consul/tutorials/network-automation/consul-terraform-sync)
+An demo of Consul and Terraform sync on GCP. Most of the configuratin is taken form this [guide](https://developer.hashicorp.com/consul/tutorials/network-automation/consul-terraform-sync). 
+
+**Note:** in this demo we are using stand alone CTS, for production its recomended to run [Consul-Terraform-Sync with high availability](https://developer.hashicorp.com/consul/docs/nia/usage/run-ha)
 
 ## Prerequisites
 
@@ -7,7 +9,7 @@ Before you begin, ensure you have the following tools installed:
 
 - [Google Cloud CLI (gcloud)](https://cloud.google.com/sdk/docs/install)
 - [HashiCorp Packer](https://developer.hashicorp.com/packer/tutorials/docker-get-started/get-started-install-cli)
-- **Consul License File**
+- **Consul License File** more details on Consul-Terraform-Sync Enterprise can be found [here](https://developer.hashicorp.com/consul/docs/nia/enterprise)
 
 Absolutely, here’s an updated README section that describes the functionality and setup of the `cts-firewall-module` using the refined Terraform configuration.
 
