@@ -127,3 +127,9 @@ consul_server_instance_links = [
   "https://www.googleapis.com/compute/v1/projects/hc-********/zones/******-west2-a/instances/consul-server-3",
 ]
 ```
+
+## Restart CTS
+```bash
+sudo systemctl restart consul-terraform-sync
+sudo journalctl -f
+```
