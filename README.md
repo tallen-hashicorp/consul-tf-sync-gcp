@@ -104,11 +104,11 @@ packer init packer/gcp-almalinux-cts.pkr.hcl
 # Build the Consul server image
 packer build -var-file=variables.pkrvars.hcl packer/gcp-almalinux-consul-server.pkr.hcl
 
-# Build the CTS server image
-packer build -var-file=variables.pkrvars.hcl packer/gcp-almalinux-cts.pkr.hcl
-
 # Build the nginx server image
 packer build -var-file=variables.pkrvars.hcl packer/gcp-almalinux-nginx.pkr.hcl
+
+# Build the CTS server image
+packer build -var-file=variables.pkrvars.hcl packer/gcp-almalinux-cts.pkr.hcl
 ```
 
 ## Step 4: Provision with Terraform
