@@ -31,7 +31,7 @@ source "googlecompute" "almalinux-nginx" {
   region              = var.gcp_region
   zone                = var.gcp_zone
   source_image_family = var.image_family
-  machine_type        = "e2-medium"
+  machine_type        = "e2-standard-4"
   image_name          = "almalinux-nginx{{timestamp}}"
   image_family        = "almalinux-nginx"
   disk_size           = 20
@@ -51,6 +51,13 @@ build {
   provisioner "file" {
     source = "./consul.hclic"
     destination = "/tmp/consul.hclic"
+  }
+
+  provisioner "shell" {
+    script            = "./packer/scripts/update-gcp-project.sh"
+    environment_vars  = [
+      "GCP_PROJECT_ID=${var.gcp_project_id}",
+    ]
   }
 
   provisioner "shell" {

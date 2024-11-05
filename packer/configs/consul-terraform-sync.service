@@ -1,0 +1,13 @@
+[Unit]
+Description=Consul Terraform Sync Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/consul-terraform-sync start -config-file=/etc/cts/cts-firewall.hcl
+Restart=on-failure
+RestartSec=5
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

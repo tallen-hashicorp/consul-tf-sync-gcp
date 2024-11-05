@@ -24,5 +24,5 @@ variable "cts_instance_count" {
 
 variable "nginx_instance_count" {
   description = "The number of nginx instances to create"
-  default     = 1
+  default     = 2
 }

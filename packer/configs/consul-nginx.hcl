@@ -30,4 +30,7 @@ service {
         interval = "10s"
         timeout = "1s"
     }
+    meta = {
+        gcp_project_id = ""
+    }
 }

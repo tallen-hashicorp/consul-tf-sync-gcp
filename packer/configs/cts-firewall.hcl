@@ -1,5 +1,5 @@
 log_level   = "INFO"
-working_dir = "sync-tasks"
+working_dir = "/etc/cts/sync-tasks"
 port        = 8558
 id          = "cts-firewall"
 
@@ -7,6 +7,12 @@ buffer_period {
   enabled = true
   min     = "5s"
   max     = "20s"
+}
+
+syslog {
+  enabled  = true
+  name     = "consul-terraform-sync"
+  facility = "local0"
 }
 
 license {
@@ -23,5 +29,32 @@ consul {
     default_check {
       address = "http://localhost:8558"
     }
+  }
+}
+
+driver "terraform" {
+  log         = false
+
+  backend "consul" {
+    gzip = true
+  }
+
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+      version = "~> 6.10.0"
+    }
+  }
+}
+
+task {
+  name      = "firewall"
+  description = "add firewall changes for every nginx node"
+  module    = "/opt/cts-firewall-module"
+  providers = ["google"]
+
+  condition "services" {
+    names = ["standalone/nginx"]
+    use_as_module_input = true
   }
 }
