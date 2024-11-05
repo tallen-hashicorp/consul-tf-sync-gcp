@@ -3,7 +3,7 @@ Description=Consul Terraform Sync Service
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/consul-terraform-sync start -config-file=/etc/cts/cts-firewall.hcl
+ExecStart=/usr/bin/consul-terraform-sync start -config-file=/etc/cts/cts-config.hcl
 Restart=on-failure
 RestartSec=5
 User=root

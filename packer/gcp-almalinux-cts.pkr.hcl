@@ -49,8 +49,8 @@ build {
   }
 
   provisioner "file" {
-    source = "./packer/configs/cts-firewall.hcl"
-    destination = "/tmp/cts-firewall.hcl"
+    source = "./packer/configs/cts-config.hcl"
+    destination = "/tmp/cts-config.hcl"
   }
 
   provisioner "file" {
