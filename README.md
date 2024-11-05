@@ -75,6 +75,10 @@ This screenshot shows the backend configuration:
 
 ![nginx](./docs/nginx-backend.png)
 
+The following shows the instance group when this is scaled out further
+
+![scaled](./docs/nginx-backend-5.png)
+
 ### Future Considerations
 
 For larger setups or different use cases, load balancing rules could be applied to additional services or protocols, expanding the capabilities of the load balancer. Implementing multiple backend services could enhance redundancy and scalability, ensuring seamless application performance as demand fluctuates.
