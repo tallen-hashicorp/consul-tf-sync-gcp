@@ -37,7 +37,7 @@ sudo chmod -R 755 /opt/cts-lb-module
 
 # Move config file
 sudo mkdir -p /etc/cts
-sudo mv /tmp/cts-firewall.hcl /etc/cts/cts-firewall.hcl
+sudo mv /tmp/cts-config.hcl /etc/cts/cts-config.hcl
 
 # Move and configure service
 sudo mkdir -p /etc/cts
